@@ -1,0 +1,15 @@
+{
+  "name": "sfwm_nodeserver",
+  "version": "0.0.1",
+  "description": "sfwm_nodeserver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.11.0"
+  }
+}
