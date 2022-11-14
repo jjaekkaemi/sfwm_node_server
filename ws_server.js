@@ -25,4 +25,7 @@ function sendData(data){
         client_ws.send(JSON.stringify(data))
     }
 }
-module.exports = {wss, sendData}
+function isConnect(){
+    return client_ws
+}
+module.exports = {wss, sendData, isConnect}

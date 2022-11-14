@@ -7,7 +7,7 @@ npm install
 
 ## Project execute
 ```
-node index.js -p 3000 -a wss_address
+node index.js -p 3000 -a wss_address 
 ```
 ##options
 ```
