@@ -1,28 +1,46 @@
 const fs = require('fs')
 const {sendData, isConnect} = require("./ws_server")
-const dir = "./data"
+const {sendDataFunc} = require("./serial")
+const dir = "../sfwm_python_cv/detected.jpg"
 let filedata = false
+let alertinterval = null
+let existCount = 0
+let ALERT_TIME = 29500
 function fileCheck(){
     setInterval(()=>{
-        if(isConnect()!=null) {
-            fs.readdir(dir, function(error, filelist){
-                if(filelist.length!=0){
-                    for(let f of filelist){
-                        if (!filedata){
-                            filedata = true
-                            setTimeout(()=>{
-                                sendData({type:1, data:true})
-                            },30000)
+            fs.readFile(dir, (err, data)=> {
+                if(!err) {
+                    if(alertinterval==null){
+                        alertinterval = setTimeout(()=>{
+                            sendDataFunc("a_on")
+                            sendDataFunc("a_on")
                             
-                        }
+                            sendData({type:1, data:data})
+                            console.log("alert on")
+                            
+                        },ALERT_TIME)
                     }
+                    fs.unlink(dir, err=>{
+                        if(err) console.log(err)
                     
+                        existCount = 2
+                    })
                 }
                 else{
-                    filedata = false
+                        if(existCount==0){
+                            existCount = 2
+                            filedata = false
+                            clearTimeout(alertinterval)
+                            alertinterval = null
+                            
+                            sendDataFunc("a_off")
+                            sendDataFunc("a_off")
+                            sendData({type:1, data:null})
+                    }
+                    existCount-=1
+                    
                 }
             })
-        }
 
     }, 1000)
 }

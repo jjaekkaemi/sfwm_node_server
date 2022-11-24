@@ -1,5 +1,5 @@
 const {WebSocketServer} = require('ws')
-const {getSensorData} = require("./ws_client")
+const {getSensorData} = require("./serial")
 const wss = new WebSocketServer({port: 3001})
 let client_ws = null
 wss.on("connection", ws => {
